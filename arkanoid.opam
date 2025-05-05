@@ -6,13 +6,14 @@ description:
 maintainer: ["Roberto Turrado Camblor"]
 authors: ["Roberto Turrado Camblor"]
 license: "LICENSE"
-tags: ["topics" "games" "your" "project"]
-homepage: "https://github.com/username/reponame"
-doc: "https://url/to/documentation"
-bug-reports: "https://github.com/username/reponame/issues"
+tags: ["games"]
+homepage: "https://github.com/rturrado/arkanoid"
+doc: "https://github.com/rturrado/arkanoid"
+bug-reports: "https://github.com/rturrado/arkanoid/issues"
 depends: [
   "ocaml"
   "dune" {>= "3.14"}
+  "tsdl"
   "odoc" {with-doc}
 ]
 build: [
@@ -29,4 +30,4 @@ build: [
     "@doc" {with-doc}
   ]
 ]
-dev-repo: "git+https://github.com/username/reponame.git"
+dev-repo: "git+https://github.com/rturrado/arkanoid.git"

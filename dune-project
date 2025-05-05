@@ -5,7 +5,7 @@
 (generate_opam_files true)
 
 (source
- (github username/reponame))
+ (github rturrado/arkanoid))
 
 (authors "Roberto Turrado Camblor")
 
@@ -13,14 +13,13 @@
 
 (license LICENSE)
 
-(documentation https://url/to/documentation)
+(documentation https://github.com/rturrado/arkanoid)
 
 (package
  (name arkanoid)
  (synopsis "The Arkanoid game")
  (description "Learning some OCaml by implementing this beautiful arcade game.")
- (depends ocaml dune)
- (tags
-  (topics "games" your project)))
+ (depends ocaml dune tsdl)
+ (tags ("games")))
 
 ; See the complete stanza docs at https://dune.readthedocs.io/en/stable/dune-files.html#dune-project
