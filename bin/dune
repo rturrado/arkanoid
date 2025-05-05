@@ -1,4 +1,5 @@
 (executable
  (public_name arkanoid)
  (name main)
- (libraries tsdl))
+ (libraries arkanoid tsdl)
+)

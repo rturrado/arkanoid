@@ -1,2 +1,5 @@
 (library
- (name arkanoid))
+ (name arkanoid)
+ (modules color context controls paddle rectangle)
+ (libraries tsdl)
+)
