@@ -1,9 +1,9 @@
 open Rectangle
 
-module Paddle : sig
+module Ball : sig
     type t = Rectangle.t
 
     val default : Rectangle.t
 
-    val paint (Tsdl.Sdl.renderer, Paddle.t) -> unit
+    val paint (Tsdl.Sdl.renderer, Ball.t) -> unit
 end

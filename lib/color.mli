@@ -8,4 +8,5 @@ module Color : sig
 
     val black : color_t
     val grey : color_t
+    val yellow : color_t
 end
