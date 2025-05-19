@@ -1,4 +1,4 @@
-module PlayerState = sig
+module Player_state : sig
     type t = {
         number_of_lives : int;
     }

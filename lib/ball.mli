@@ -5,5 +5,5 @@ module Ball : sig
 
     val default : Rectangle.t
 
-    val paint (Tsdl.Sdl.renderer, Ball.t) -> unit
+    val paint : Tsdl.Sdl.renderer -> t -> (unit, string) result
 end

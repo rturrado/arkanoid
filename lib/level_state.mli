@@ -1,5 +1,13 @@
-module LevelState : sig
-    val ball : Ball.t
-    val paddle : Paddle.t
-    val wall : Wall.t
+open Ball
+open Paddle
+open Wall
+
+module Level_state : sig
+    type t = {
+        ball : Ball.t;
+        paddle : Paddle.t;
+        wall : Wall.t;
+    }
+
+    val default : t
 end

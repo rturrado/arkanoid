@@ -7,6 +7,6 @@ module Brick = struct
         color : Color.t;
     }
 
-    let paint sdl_renderer brick =
-        paint_rectangle sdl_renderer brick.rectangle brick.color
+    let paint sdl_renderer brick : (unit, string) result =
+        Rectangle.paint sdl_renderer brick.rectangle brick.color
 end

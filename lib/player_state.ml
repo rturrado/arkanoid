@@ -1,4 +1,4 @@
-module PlayerState = struct
+module Player_state = struct
     type t = {
         number_of_lives : int;
     }

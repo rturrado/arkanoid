@@ -1,7 +1,12 @@
-import Color
+open Color
 
 module Rectangle : sig
-    type t = Tsdl.Sdl.Rect
+    type t = {
+        x : int;
+        y : int;
+        width : int;
+        height : int;
+    }
 
-    val paint_rectangle : (Tsdl.Sdl.renderer, Color) -> unit
+    val paint : Tsdl.Sdl.renderer -> t -> Color.t -> (unit, string) result
 end

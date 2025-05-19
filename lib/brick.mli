@@ -7,5 +7,5 @@ module Brick : sig
         color : Color.t;
     }
 
-    val paint (Tsdl.Sdl.renderer, Brick.t) -> unit
+    val paint : Tsdl.Sdl.renderer -> t -> (unit, string) result
 end
