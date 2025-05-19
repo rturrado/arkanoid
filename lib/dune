@@ -1,6 +1,19 @@
 (library
  (name arkanoid)
- (modules color context controls paddle rectangle)
+ (modules
+    Ball
+    Brick
+    Canvas
+    Color
+    Context
+    Events
+    Game_state
+    Graphics
+    Level_state
+    Paddle
+    Player_state
+    Rectangle
+    Wall)
  (libraries tsdl)
- (preprocess (pps (ppx_string_interpolation)))
+ (preprocess (pps ppx_string_interpolation))
 )

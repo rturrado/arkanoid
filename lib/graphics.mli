@@ -1,11 +1,11 @@
-module Graphics = sig
+module Graphics : sig
     type t = {
         sdl_renderer : Tsdl.Sdl.renderer;
     }
 
-    val render : Tsdl.Sdl.renderer -> (Context.t, string) result
+    val render : t -> unit
 
-    val delay : int -> unit
+    val delay : int32 -> unit
 
-    val clear : Tsdl.Sdl.renderer -> (unit, string) result
+    val clear : t -> (unit, string) result
 end

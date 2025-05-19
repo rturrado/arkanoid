@@ -5,5 +5,5 @@ module Paddle : sig
 
     val default : Rectangle.t
 
-    val paint (Tsdl.Sdl.renderer, Paddle.t) -> unit
+    val paint : Tsdl.Sdl.renderer -> t -> (unit, string) result
 end
