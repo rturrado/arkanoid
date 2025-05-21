@@ -9,4 +9,6 @@ module Rectangle : sig
     }
 
     val paint : Tsdl.Sdl.renderer -> t -> Color.t -> (unit, string) result
+
+    val paint_border : Tsdl.Sdl.renderer -> t -> Color.t -> (unit, string) result
 end

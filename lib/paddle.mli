@@ -1,9 +1,16 @@
 open Rectangle
 
 module Paddle : sig
-    type t = Rectangle.t
+    type t = {
+        rectangle : Rectangle.t;
+        speed : int;
+    }
 
-    val default : Rectangle.t
+    type direction = Left | Right
+
+    val default : t
+
+    val move : t -> direction -> t
 
     val paint : Tsdl.Sdl.renderer -> t -> (unit, string) result
 end

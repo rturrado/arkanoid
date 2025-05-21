@@ -1,6 +1,8 @@
 open Game_state
 open Level_state
+open Paddle
 open Player_state
+open Tsdl
 
 module Context = struct
     type t = {
@@ -25,14 +27,26 @@ module Context = struct
             [%string "Oh no! They've kill you! You have now %d$number_of_lives lives! Press any key to resume the game..."]
         | Over -> "Game over! Press Y to start a new game or N to exit..."
 
+    let move_paddle context direction =
+        { context with level_state = Level_state.move_paddle context.level_state direction }
+
     let process_event_at_pause context event =
         match event with
         | Some `Quit -> Ok context
         | _ -> Ok context
 
-    let process_event_at_playing context event =
+    let process_event_at_running context event =
         match event with
-        | Some `Quit -> Ok context
+        | Some (`Keydown keycode) ->
+            if keycode = Sdl.K.left then (
+                Sdl.log "Running: key=left";
+                Ok (move_paddle context Paddle.Left)
+            ) else if keycode = Sdl.K.right then (
+                Sdl.log "Running: key=right";
+                Ok (move_paddle context Paddle.Right)
+            ) else (
+                Ok context
+            )
         | _ -> Ok context
 
     let process_event_at_over context event =
@@ -42,4 +56,7 @@ module Context = struct
 
     let process_frame context =
         Ok context
+
+    let paint sdl_renderer context =
+        Level_state.paint sdl_renderer context.level_state
 end

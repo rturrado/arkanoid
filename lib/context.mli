@@ -1,6 +1,7 @@
 open Events
 open Game_state
 open Level_state
+open Paddle
 open Player_state
 
 module Context : sig
@@ -14,11 +15,15 @@ module Context : sig
 
     val get_notification_message : Game_state.t -> Player_state.t -> string
 
+    val move_paddle : t -> Paddle.direction -> t
+
     val process_event_at_pause : t -> Events.event -> (t, string) result
 
-    val process_event_at_playing : t -> Events.event -> (t, string) result
+    val process_event_at_running : t -> Events.event -> (t, string) result
 
     val process_event_at_over : t -> Events.event -> (t, string) result
 
     val process_frame : t -> (t, string) result
+
+    val paint : Tsdl.Sdl.renderer -> t -> (unit, string) result
 end

@@ -8,10 +8,15 @@ module Color : sig
 
     val black : t
     val grey : t
+    val white : t
     val yellow : t
+
+    val red : t
     val red_1 : t
     val red_2 : t
     val red_3 : t
+
+    val blue : t
     val blue_1 : t
     val blue_2 : t
     val blue_3 : t

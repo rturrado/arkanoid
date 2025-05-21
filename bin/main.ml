@@ -8,30 +8,40 @@ let (>>=) = Result.bind
 
 let rec loop graphics context : (unit, string) result =
     match Events.handle () with
-    | Error err -> Error err
-    | Ok (Some `Quit) -> Ok ()
+    | Error err ->
+        Sdl.log "Error: %s" err;
+        Error err
+    | Ok (Some `Quit) ->
+        Sdl.log "Ok (Some `Quit)";
+        Ok ()
     | Ok event ->
         match context.Context.game_state with
         | Ready
         | ReportingKill
         | Paused ->
+            Sdl.log "Ready | ReportingKill | Paused";
             Context.process_event_at_pause context event >>= fun new_context ->
                 loop graphics new_context
         | Over ->
+            Sdl.log "Over";
             Context.process_event_at_over context event >>= fun new_context ->
                 loop graphics new_context
         | Running ->
-            (* process event *)
-            Context.process_event_at_playing context event >>= fun new_context ->
-                (* process frame *)
-                Context.process_frame new_context >>= fun new_context ->
-                    (* render *)
-                    Graphics.render graphics;
-                    (* delay *)
-                    let delay_time : int32 = 16l in
-                    Graphics.delay delay_time;
-                    (* loop *)
-                    loop graphics new_context
+            (* clear *)
+            Graphics.clear graphics.Graphics.sdl_renderer >>= fun () ->
+                (* process event *)
+                Context.process_event_at_running context event >>= fun new_context ->
+                    (* process frame *)
+                    Context.process_frame new_context >>= fun new_context ->
+                        (* paint *)
+                        Context.paint graphics.Graphics.sdl_renderer new_context >>= fun () ->
+                            (* render *)
+                            Graphics.render graphics.Graphics.sdl_renderer;
+                            (* delay *)
+                            let delay_time : int32 = 16l in
+                            Graphics.delay delay_time;
+                            (* loop *)
+                            loop graphics new_context
 
 let main () : int =
     match Sdl.init Sdl.Init.(video + events) with

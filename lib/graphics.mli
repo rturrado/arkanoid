@@ -3,9 +3,9 @@ module Graphics : sig
         sdl_renderer : Tsdl.Sdl.renderer;
     }
 
-    val render : t -> unit
+    val render : Tsdl.Sdl.renderer -> unit
 
     val delay : int32 -> unit
 
-    val clear : t -> (unit, string) result
+    val clear : Tsdl.Sdl.renderer -> (unit, string) result
 end

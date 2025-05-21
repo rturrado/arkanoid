@@ -10,4 +10,8 @@ module Level_state : sig
     }
 
     val default : t
+
+    val move_paddle : t -> Paddle.direction -> t
+
+    val paint : Tsdl.Sdl.renderer -> t -> (unit, string) result
 end

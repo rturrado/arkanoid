@@ -6,14 +6,13 @@ module Graphics = struct
         sdl_renderer : Tsdl.Sdl.renderer;
     }
 
-    let render graphics : unit =
-        Sdl.render_present graphics.sdl_renderer
+    let render sdl_renderer : unit =
+        Sdl.render_present sdl_renderer
 
     let delay milliseconds : unit =
         Sdl.delay milliseconds
 
-    let clear graphics : (unit, string) result =
-        let sdl_renderer = graphics.sdl_renderer in
+    let clear sdl_renderer : (unit, string) result =
         let red = Color.black.red in
         let green = Color.black.green in
         let blue = Color.black.blue in
