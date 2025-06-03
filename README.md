@@ -2,6 +2,8 @@
 
 Learning some OCaml by implementing this beautiful arcade game.
 
+![screenshot.png](res/screenshot.png)
+
 ## Dependencies
 
 - `dune` compiler.
