@@ -54,6 +54,7 @@ let main ()
         match Sdl.create_window ~w:width ~h:height "SDL OpenGL" Sdl.Window.opengl with
         | Error (`Msg err) -> Sdl.log "Create window error: %s" err; 1
         | Ok sdl_window ->
+            Sdl.set_window_title sdl_window "Arkanoid";
             match Sdl.create_renderer sdl_window ~flags:Sdl.Renderer.accelerated with
             | Error (`Msg err) -> Sdl.log "Create renderer error: %s" err; 1
             | Ok sdl_renderer ->
