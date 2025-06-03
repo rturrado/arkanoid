@@ -1,5 +1,5 @@
 module Canvas : sig
-    val window_width : int
-    val window_height : int
-    val margin_size : int
+    val window_width : float
+    val window_height : float
+    val margin_size : float
 end

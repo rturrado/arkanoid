@@ -6,7 +6,8 @@ open Tsdl
 
 let (>>=) = Result.bind
 
-let rec loop graphics context : (unit, string) result =
+let rec loop (graphics : Graphics.t) (context : Context.t)
+: (unit, string) result =
     match Events.handle () with
     | Error err ->
         Sdl.log "Error: %s" err;
@@ -32,23 +33,24 @@ let rec loop graphics context : (unit, string) result =
                 (* process event *)
                 Context.process_event_at_running context event >>= fun new_context ->
                     (* process frame *)
-                    Context.process_frame new_context >>= fun new_context ->
-                        (* paint *)
-                        Context.paint graphics.Graphics.sdl_renderer new_context >>= fun () ->
-                            (* render *)
-                            Graphics.render graphics.Graphics.sdl_renderer;
-                            (* delay *)
-                            let delay_time : int32 = 16l in
-                            Graphics.delay delay_time;
-                            (* loop *)
-                            loop graphics new_context
+                    let new_context = Context.process_frame new_context in
+                    (* paint *)
+                    Context.paint graphics.Graphics.sdl_renderer new_context >>= fun () ->
+                        (* render *)
+                        Graphics.render graphics.Graphics.sdl_renderer;
+                        (* delay *)
+                        let delay_time : int32 = 16l in
+                        Graphics.delay delay_time;
+                        (* loop *)
+                        loop graphics new_context
 
-let main () : int =
+let main ()
+: int =
     match Sdl.init Sdl.Init.(video + events) with
     | Error (`Msg err) -> Sdl.log "Init error: %s" err; 1
     | Ok () ->
-        let width = Canvas.window_width in
-        let height = Canvas.window_height in
+        let width = int_of_float Canvas.window_width in
+        let height = int_of_float Canvas.window_height in
         match Sdl.create_window ~w:width ~h:height "SDL OpenGL" Sdl.Window.opengl with
         | Error (`Msg err) -> Sdl.log "Create window error: %s" err; 1
         | Ok sdl_window ->

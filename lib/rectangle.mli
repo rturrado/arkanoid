@@ -2,13 +2,15 @@ open Color
 
 module Rectangle : sig
     type t = {
-        x : int;
-        y : int;
-        width : int;
-        height : int;
+        x : float;
+        y : float;
+        width : float;
+        height : float
     }
 
-    val paint : Tsdl.Sdl.renderer -> t -> Color.t -> (unit, string) result
+    val default : t
 
+    val get_center : t -> float * float
+    val paint : Tsdl.Sdl.renderer -> t -> Color.t -> (unit, string) result
     val paint_border : Tsdl.Sdl.renderer -> t -> Color.t -> (unit, string) result
 end

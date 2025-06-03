@@ -1,11 +1,15 @@
 open Tsdl
 
 module Events = struct
-    type event = [`Quit | `Keydown of Tsdl.Sdl.keycode] option
+    type event = [
+        | `Quit
+        | `Keydown of Sdl.keycode
+    ] option
 
-    let current_pressed_keycode : Tsdl.Sdl.keycode option ref = ref None
+    let current_pressed_keycode : Sdl.keycode option ref = ref None
 
-    let handle () : (event, string) result =
+    let handle ()
+    : (event, string) result =
         let sdl_event = Sdl.Event.create () in
         if Sdl.poll_event (Some sdl_event) then (
             match Sdl.Event.get sdl_event Sdl.Event.typ with

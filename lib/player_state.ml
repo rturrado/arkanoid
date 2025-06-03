@@ -1,7 +1,9 @@
 module Player_state = struct
     type t = {
-        number_of_lives : int;
+        number_of_lives : int
     }
 
-    let default : t = { number_of_lives = 3 }
+    let default : t = {
+        number_of_lives = 3
+    }
 end

@@ -3,16 +3,15 @@ open Tsdl
 
 module Graphics = struct
     type t = {
-        sdl_renderer : Tsdl.Sdl.renderer;
+        sdl_renderer : Sdl.renderer
     }
 
-    let render sdl_renderer : unit =
-        Sdl.render_present sdl_renderer
-
-    let delay milliseconds : unit =
+    let delay (milliseconds : int32)
+    : unit =
         Sdl.delay milliseconds
 
-    let clear sdl_renderer : (unit, string) result =
+    let clear (sdl_renderer : Sdl.renderer)
+    : (unit, string) result =
         let red = Color.black.red in
         let green = Color.black.green in
         let blue = Color.black.blue in
@@ -23,4 +22,8 @@ module Graphics = struct
             match Sdl.render_clear sdl_renderer with
             | Error (`Msg  err) -> Error err
             | Ok () -> Ok ()
+
+    let render (sdl_renderer : Sdl.renderer)
+    : unit =
+        Sdl.render_present sdl_renderer
 end

@@ -1,19 +1,23 @@
 (library
- (name arkanoid)
- (modules
-    Ball
-    Brick
-    Canvas
-    Color
-    Context
-    Events
-    Game_state
-    Graphics
-    Level_state
-    Paddle
-    Player_state
-    Rectangle
-    Wall)
- (libraries tsdl)
- (preprocess (pps ppx_string_interpolation))
+    (name arkanoid)
+    (modules
+        Ball
+        Brick
+        Canvas
+        Collision
+        Color
+        Context
+        Events
+        Game_state
+        Graphics
+        Level_state
+        Maths
+        Paddle
+        Physics
+        Player_state
+        Rectangle
+        Time
+        Wall)
+    (libraries base tsdl)
+    (preprocess (pps ppx_string_interpolation))
 )
