@@ -13,7 +13,7 @@ module Context : sig
 
     val default : t
 
-    val get_notification_message : Game_state.t -> Player_state.t -> string
+    val get_notification_message : Game_state.t -> string
     val move_paddle : t -> Paddle.direction_t -> t
     val process_event_at_pause : t -> Events.event -> (t, string) result
     val process_event_at_running : t -> Events.event -> (t, string) result

@@ -7,8 +7,20 @@ module Color : sig
     }
 
     val black : t
+    val black_1 : t
+    val black_2 : t
+    val black_3 : t
+
     val grey : t
+    val grey_1 : t
+    val grey_2 : t
+    val grey_3 : t
+
     val white : t
+    val white_1 : t
+    val white_2 : t
+    val white_3 : t
+
     val yellow : t
 
     val red : t

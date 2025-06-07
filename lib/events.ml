@@ -3,10 +3,11 @@ open Tsdl
 module Events = struct
     type event = [
         | `Quit
-        | `Keydown of Sdl.keycode
+        | `Key_press of Sdl.keycode
+        | `Key_hold of Sdl.keycode
     ] option
 
-    let current_pressed_keycode : Sdl.keycode option ref = ref None
+    let current_held_keycode : Sdl.keycode option ref = ref None
 
     let handle ()
     : (event, string) result =
@@ -16,14 +17,21 @@ module Events = struct
             | t when t = Sdl.Event.quit -> Ok (Some `Quit)
             | t when t = Sdl.Event.key_down ->
                 let keycode = Sdl.Event.get sdl_event Sdl.Event.keyboard_keycode in
-                current_pressed_keycode := Some keycode;
-                Ok (Some (`Keydown keycode))
+                let repeat = Sdl.Event.get sdl_event Sdl.Event.keyboard_repeat in
+                current_held_keycode := Some keycode;
+                if repeat  = 0 then
+                    Ok (Some (`Key_press keycode))
+                else
+                    Ok (Some (`Key_hold keycode))
             | t when t = Sdl.Event.key_up ->
-                current_pressed_keycode := None;
+                current_held_keycode := None;
                 Ok None
             | _ ->
-                Ok (Option.map (fun k -> `Keydown k) !current_pressed_keycode)
-        ) else (
-            Ok (Option.map (fun k -> `Keydown k) !current_pressed_keycode)
-        )
+                match !current_held_keycode with
+                | None -> Ok None
+                | Some keycode -> Ok (Some (`Key_hold keycode))
+        ) else
+            match !current_held_keycode with
+            | None -> Ok None
+            | Some keycode -> Ok (Some (`Key_hold keycode))
 end

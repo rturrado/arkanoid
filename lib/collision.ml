@@ -92,9 +92,10 @@ module Collision = struct
 
     let sort_collisions_by_time (c1 : t) (c2 : t)
     : int =
-        if Time.less c1.time c2.time then -1
-        else if Time.greater c1.time c2.time then 1
-        else 0
+        if Time.less c1.time c2.time then
+            -1
+        else
+            if Time.greater c1.time c2.time then 1 else 0
 
     let get_earliest_collisions (collisions : t list)
     : t list option =

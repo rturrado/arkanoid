@@ -6,12 +6,15 @@
         Canvas
         Collision
         Color
+        Constants
         Context
         Events
         Game_state
         Graphics
         Level_state
+        Log
         Maths
+        Message_box
         Paddle
         Physics
         Player_state
@@ -19,5 +22,4 @@
         Time
         Wall)
     (libraries base tsdl)
-    (preprocess (pps ppx_string_interpolation))
 )

@@ -30,29 +30,28 @@ module Physics = struct
 
     let swept_aabb_x (moving_box_start_center_x: float) (expanded_fixed_box : Rectangle.t) (dx : float)
     : float * float =
-        if dx <> 0.0
-        then begin
+        if dx <> 0.0 then (
             let t_left = (expanded_fixed_box.x -. moving_box_start_center_x ) /. dx in
             let t_right = ((expanded_fixed_box.x +. expanded_fixed_box.width) -. moving_box_start_center_x) /. dx in
             (min t_left t_right, max t_left t_right)
-        end
-        else (Float.neg_infinity, Float.infinity)
+        ) else
+            (Float.neg_infinity, Float.infinity)
 
     let swept_aabb_y (moving_box_start_center_y: float) (expanded_fixed_box : Rectangle.t) (dy : float)
     : float * float =
-        if dy <> 0.0
-        then begin
+        if dy <> 0.0 then (
             let t_top = (expanded_fixed_box.y -. moving_box_start_center_y ) /. dy in
             let t_bottom = ((expanded_fixed_box.y +. expanded_fixed_box.height) -. moving_box_start_center_y) /. dy in
             (min t_top t_bottom, max t_top t_bottom)
-        end
-        else (Float.neg_infinity, Float.infinity)
+        ) else
+            (Float.neg_infinity, Float.infinity)
 
     let check_collision_time (t_enter : float) (t_exit : float)
     : float option =
-        if (t_enter < t_exit && t_enter < 1.0 && t_exit > 0.0)
-        then Some t_enter
-        else None
+        if (t_enter < t_exit && t_enter < 1.0 && t_exit > 0.0) then
+            Some t_enter
+        else
+            None
 
     let get_collision_time (t_enter_x : float) (t_exit_x : float) (t_enter_y : float) (t_exit_y : float)
     : float option =
