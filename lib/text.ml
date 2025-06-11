@@ -34,11 +34,35 @@ module Text = struct
         | Error (`Msg err) -> Error ("Ttf.open_font error: " ^ err)
         | Ok sdl_font -> Ok sdl_font
 
-(*
-    let close_font (sdl_font : Ttf.font)
+    let close_font (font : Ttf.font)
     : unit =
-        Ttf.close_font sdl_font
-*)
+        Ttf.close_font font
+
+    let destroy_surface (surface : Sdl.surface)
+    : unit =
+        Sdl.free_surface surface
+
+    let destroy_texture (texture : texture_t)
+    : unit =
+        Sdl.destroy_texture texture.data
+
+    let with_font (font : Ttf.font) (f : Ttf.font -> ('a, string) result)
+    : ('a, string) result =
+        let result = f font in
+        close_font font;
+        result
+
+    let with_surface (surface : Sdl.surface) (f : Sdl.surface -> ('a, string) result)
+    : ('a, string) result =
+        let result = f surface in
+        destroy_surface surface;
+        result
+
+    let with_textures (textures : textures_t) (f : textures_t -> ('a, string) result)
+    : ('a, string) result =
+        let result = f textures in
+        List.iter (fun t -> destroy_texture t) textures;
+        result
 
     let render_text_solid (ttf_font : Ttf.font) (text : string) (color : Color.t)
     : (Sdl.surface, string) result =
@@ -68,10 +92,12 @@ module Text = struct
         | [] -> Ok []
         | first_line :: rest_lines ->
             render_text_solid ttf_font first_line color >>= fun sdl_surface ->
-                create_texture_from_surface sdl_renderer sdl_surface >>= fun texture ->
-                    match generate_textures sdl_renderer rest_lines ttf_font color with
-                    | Error err -> Error err
-                    | Ok textures -> Ok (texture :: textures)
+                with_surface sdl_surface (fun sdl_surface ->
+                    create_texture_from_surface sdl_renderer sdl_surface >>= fun texture ->
+                        match generate_textures sdl_renderer rest_lines ttf_font color with
+                        | Error err -> destroy_texture texture; Error err
+                        | Ok textures -> Ok (texture :: textures)
+                )
 
     let get_textures_width (textures : texture_t list)
     : float =
@@ -143,8 +169,12 @@ module Text = struct
     let paint (sdl_renderer : Sdl.renderer) (text : string) (font : Font.t) (color : Color.t) (dst : Rectangle.t)
     : (unit, string) result =
         open_font font >>= fun ttf_font ->
-            let lines = String.split_on_char '\n' text in
-            generate_textures sdl_renderer lines ttf_font color >>= fun textures ->
-                calculate_textures_bounding_box textures dst >>= fun bounding_box ->
-                    render_textures sdl_renderer textures bounding_box
+            with_font ttf_font (fun ttf_font ->
+                let lines = String.split_on_char '\n' text in
+                generate_textures sdl_renderer lines ttf_font color >>= fun textures ->
+                    with_textures textures (fun textures ->
+                        calculate_textures_bounding_box textures dst >>= fun bounding_box ->
+                            render_textures sdl_renderer textures bounding_box
+                    )
+            )
 end
