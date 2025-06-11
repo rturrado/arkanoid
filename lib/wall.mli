@@ -9,5 +9,6 @@ module Wall : sig
 
     val map_of_list : Brick.t list -> t
     val list_of_map : t -> Brick.t list
+    val is_empty : t -> bool
     val paint : Tsdl.Sdl.renderer -> t -> (unit, string) result
 end

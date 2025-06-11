@@ -3,7 +3,7 @@ module Color : sig
         red : int;
         green : int;
         blue : int;
-        alpha : int;
+        alpha : int
     }
 
     val black : t

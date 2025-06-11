@@ -3,9 +3,10 @@ open Arkanoid.Canvas
 open Arkanoid.Constants
 open Arkanoid.Events
 open Arkanoid.Graphics
+open Arkanoid.Image
+open Arkanoid.Intro
 open Arkanoid.Log
 open Arkanoid.Text
-open Tsdl
 
 let (>>=) = Result.bind
 
@@ -26,11 +27,11 @@ let rec loop (graphics : Graphics.t) (context : Context.t)
         process_event context event >>= fun new_context ->
             let new_context = Context.process_frame new_context in
             (* clear graphics *)
-            Graphics.clear graphics.Graphics.sdl_renderer >>= fun () ->
+            Graphics.render_clear graphics >>= fun () ->
                 (* paint context *)
-                Context.paint graphics.Graphics.sdl_renderer new_context >>= fun () ->
+                Context.paint graphics new_context >>= fun () ->
                     (* render graphics *)
-                    Graphics.render graphics.Graphics.sdl_renderer;
+                    Graphics.render_present graphics;
                     (* delay *)
                     let delay_time : int32 = Int32.of_float Constants.frame_duration in
                     Graphics.delay delay_time;
@@ -41,22 +42,25 @@ let main ()
 : (unit, string) result =
     Log.init();
     Graphics.init () >>= fun () ->
-        Text.init () >>= fun () ->
-            let width = int_of_float Canvas.window_width in
-            let height = int_of_float Canvas.window_height in
-            let title = "Arkanoid" in
-            Graphics.create_window width height title >>= fun sdl_window ->
-                Graphics.create_renderer sdl_window >>= fun sdl_renderer ->
-                    let graphics = { Graphics.sdl_renderer = sdl_renderer } in
-                    let context = Context.default in
-                    match loop graphics context with
-                    | Error err -> Error err
-                    | Ok () ->
-                        Sdl.destroy_renderer sdl_renderer;
-                        Sdl.destroy_window sdl_window;
-                        Text.quit ();
-                        Sdl.quit ();
-                        Ok ()
+        Image.init () >>=  fun () ->
+            Text.init () >>= fun () ->
+                let width = int_of_float Canvas.window_width in
+                let height = int_of_float Canvas.window_height in
+                let title = "Arkanoid" in
+                Graphics.create_window width height title >>= fun sdl_window ->
+                    Graphics.create_renderer sdl_window >>= fun sdl_renderer ->
+                        let graphics : Graphics.t = sdl_renderer in
+                        let context : Context.t = Context.default in
+                        Intro.paint graphics >>= fun () ->
+                            match loop graphics context with
+                            | Error err -> Error err
+                            | Ok () ->
+                                Graphics.destroy_renderer sdl_renderer;
+                                Graphics.destroy_window sdl_window;
+                                Text.quit ();
+                                Image.quit ();
+                                Graphics.quit ();
+                                Ok ()
 
 let () =
     if !Sys.interactive then ()

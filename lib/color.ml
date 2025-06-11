@@ -3,7 +3,7 @@ module Color = struct
         red : int;
         green : int;
         blue : int;
-        alpha : int;
+        alpha : int
     }
 
     let black : t = { red = 0; green = 0; blue = 0; alpha = 0; }

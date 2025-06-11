@@ -12,6 +12,8 @@
         Font
         Game_state
         Graphics
+        Image
+        Intro
         Level_state
         Log
         Maths
@@ -23,5 +25,5 @@
         Text
         Time
         Wall)
-    (libraries base tsdl tsdl-ttf)
+    (libraries base tsdl tsdl-image tsdl-ttf)
 )

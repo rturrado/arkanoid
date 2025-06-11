@@ -14,5 +14,6 @@ module Level_state : sig
 
     val move_paddle : t -> Paddle.direction_t -> t
     val hit_brick : t -> Brick.id -> t
+    val is_finished : t -> bool
     val paint : Tsdl.Sdl.renderer -> t -> (unit, string) result
 end

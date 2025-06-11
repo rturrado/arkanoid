@@ -1,4 +1,5 @@
 open Color
+open Graphics
 open Rectangle
 open Tsdl
 
@@ -35,5 +36,5 @@ module Ball = struct
 
     let paint (sdl_renderer : Sdl.renderer) (ball : t)
     : (unit, string) result =
-        Rectangle.paint sdl_renderer ball.rectangle Color.yellow
+        Graphics.paint_rectangle sdl_renderer ball.rectangle Color.yellow
 end

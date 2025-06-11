@@ -1,5 +1,6 @@
 open Canvas
 open Color
+open Graphics
 open Rectangle
 open Tsdl
 
@@ -35,5 +36,5 @@ module Paddle =  struct
 
     let paint (sdl_renderer : Sdl.renderer) (paddle : t)
     : (unit, string) result =
-        Rectangle.paint sdl_renderer paddle.rectangle Color.grey
+        Graphics.paint_rectangle sdl_renderer paddle.rectangle Color.grey
 end

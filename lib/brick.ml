@@ -1,4 +1,5 @@
 open Color
+open Graphics
 open Rectangle
 open Tsdl
 
@@ -21,6 +22,6 @@ module Brick = struct
 
     let paint (sdl_renderer : Sdl.renderer) (brick : t)
     : (unit, string) result =
-        Rectangle.paint sdl_renderer brick.rectangle brick.fill_color >>= fun () ->
-            Rectangle.paint_border sdl_renderer brick.rectangle brick.border_color
+        Graphics.paint_rectangle sdl_renderer brick.rectangle brick.fill_color >>= fun () ->
+            Graphics.paint_rectangle_border sdl_renderer brick.rectangle brick.border_color
 end
