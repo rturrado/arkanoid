@@ -1,6 +1,7 @@
 open Ball
 open Collision
 open Events
+open Font
 open Game_state
 open Level_state
 open Log
@@ -28,19 +29,18 @@ module Context = struct
     let get_notification_message (game_state : Game_state.t) : string =
         match game_state with
         | Game_state.Ready ->
-            "Use < and > to move the paddle.\n" ^
-            "Use P to pause the game at any time.\n" ^
-            "Press any key to start the game..."
+            "Use < and > to move\n" ^
+            "Use P to pause the game\n" ^
+            "Press any key to start!"
         | Game_state.Paused ->
-            "Press any key to resume the game..."
+            "Press any key to resume!"
         | Game_state.Running ->
             "Running"
         | Game_state.ReportingKill ->
-            "Oh no! They've killed you!\n" ^
-            "Press any key to resume the game..."
+            "They've killed you!\n" ^
+            "Press any key to resume!"
         | Over ->
-            "Game over!\n" ^
-            "Press Y to start a new game or N to exit..."
+            "Game over!"
 
     let move_paddle (context : t) (direction : Paddle.direction_t)
     : t =
@@ -110,7 +110,7 @@ module Context = struct
     : (t, string) result =
         match event with
         | Some (`Key_press _) ->
-            Log.log_verbose "Paused: key=_";
+            Log.verbose "Paused: key=_";
             Ok { context with game_state = Game_state.Running }
         | _ -> Ok context
 
@@ -118,15 +118,15 @@ module Context = struct
     : (t, string) result =
         match event with
         | Some (`Key_press keycode) when keycode = Sdl.K.p ->
-            Log.log_verbose "Running: key=p";
+            Log.verbose "Running: key=p";
             Ok { context with game_state = Game_state.Paused }
         | Some (`Key_press keycode)
         | Some (`Key_hold keycode) when keycode = Sdl.K.left ->
-            Log.log_verbose "Running: key=left";
+            Log.verbose "Running: key=left";
             Ok (move_paddle context Paddle.Left)
         | Some (`Key_press keycode)
         | Some (`Key_hold keycode) when keycode = Sdl.K.right ->
-            Log.log_verbose "Running: key=right";
+            Log.verbose "Running: key=right";
             Ok (move_paddle context Paddle.Right)
         | _ -> Ok context
 
@@ -153,5 +153,5 @@ module Context = struct
                 Ok ()
             else
                 let message = get_notification_message context.game_state in
-                Message_box.paint sdl_renderer message
+                Message_box.paint sdl_renderer message Font.arcade_r;
 end

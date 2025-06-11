@@ -9,6 +9,7 @@
         Constants
         Context
         Events
+        Font
         Game_state
         Graphics
         Level_state
@@ -19,7 +20,8 @@
         Physics
         Player_state
         Rectangle
+        Text
         Time
         Wall)
-    (libraries base tsdl)
+    (libraries base tsdl tsdl-ttf)
 )

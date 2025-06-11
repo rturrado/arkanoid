@@ -6,7 +6,7 @@ module Game_state = struct
         | ReportingKill (* Game is paused because the player was killed *)
         | Over (* Game is over *)
 
-    let default : t = Running
+    let default : t = Ready
 
     let to_string game_state =
         match game_state with

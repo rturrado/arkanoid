@@ -17,12 +17,12 @@ module Level_state = struct
 
     let default : t =
         let ball_x = Canvas.window_width /. 2.0 -. Ball.default.rectangle.width /. 2.0 in
-        let ball_y = Canvas.window_height -. Ball.default.rectangle.height -. Canvas.margin_size in
+        let ball_y = Canvas.window_height -. Canvas.margin_size -. Paddle.default.rectangle.height -. Ball.default.rectangle.height in
         let ball_rectangle = { Ball.default.rectangle with x = ball_x; y = ball_y } in
         let ball : Ball.t = { Ball.default with rectangle = ball_rectangle } in
 
         let paddle_x = Canvas.window_width /. 2.0 -. Paddle.default.rectangle.width /. 2.0 in
-        let paddle_y = Canvas.window_height -. Paddle.default.rectangle.height -. Canvas.margin_size in
+        let paddle_y = Canvas.window_height -. Canvas.margin_size -. Paddle.default.rectangle.height in
         let paddle_rectangle = { Paddle.default.rectangle with x = paddle_x; y = paddle_y } in
         let paddle : Paddle.t = { Paddle.default with rectangle = paddle_rectangle } in
 

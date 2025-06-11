@@ -5,5 +5,5 @@ module Events : sig
         | `Key_hold of Tsdl.Sdl.keycode
     ] option
 
-    val handle : unit -> (event, string) result
+    val handle : unit -> event
 end
