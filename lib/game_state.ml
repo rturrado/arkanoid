@@ -8,7 +8,12 @@ module Game_state = struct
 
     let default : t = Ready
 
-    let to_string game_state =
+    let is_over (game_state : t)
+    : bool =
+        game_state = Over
+
+    let to_string (game_state : t)
+    : string =
         match game_state with
         | Ready -> "Ready"
         | Paused -> "Paused"

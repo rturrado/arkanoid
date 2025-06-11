@@ -31,7 +31,7 @@ module Rectangle = struct
         let blue = color.Color.blue in
         let alpha = color.Color.alpha in
         match Sdl.set_render_draw_color sdl_renderer red green blue alpha with
-        | Error (`Msg err) -> Sdl.log "Rectangle.paint: set render draw color error: %s" err; Error err
+        | Error (`Msg err) -> Error ("Rectangle.paint: set render draw color error: " ^ err)
         | Ok () ->
             let x = Maths.int_of_float rectangle.x in
             let y = Maths.int_of_float rectangle.y in
@@ -49,7 +49,7 @@ module Rectangle = struct
         let blue = color.Color.blue in
         let alpha = color.Color.alpha in
         match Sdl.set_render_draw_color sdl_renderer red green blue alpha with
-        | Error (`Msg err) -> Sdl.log "Rectangle.paint_border: set render draw color error: %s" err; Error err
+        | Error (`Msg err) -> Error ("Rectangle.paint_border: set render draw color error: " ^ err)
         | Ok () ->
             let x = Maths.int_of_float rectangle.x in
             let y = Maths.int_of_float rectangle.y in

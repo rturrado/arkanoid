@@ -82,6 +82,10 @@ module Level_state = struct
                 { level_state with wall = Wall.BrickMap.add brick_id updated_brick level_state.wall }
         | None -> level_state
 
+    let is_finished (level_state : t)
+    : bool =
+        Wall.is_empty level_state.wall
+
     let paint (sdl_renderer : Sdl.renderer) (level_state : t)
     : (unit, string) result =
         Ball.paint sdl_renderer level_state.ball >>= fun () ->

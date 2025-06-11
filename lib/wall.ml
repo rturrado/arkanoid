@@ -16,6 +16,10 @@ module Wall = struct
     : Brick.t list =
         BrickMap.fold (fun _ brick acc -> brick :: acc) brick_map []
 
+    let is_empty (brick_map : t)
+    : bool =
+        BrickMap.is_empty brick_map
+
     let paint (sdl_renderer : Sdl.renderer) (wall : t)
     : (unit, string) result =
         let paint_brick brick =

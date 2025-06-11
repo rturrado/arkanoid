@@ -8,5 +8,6 @@ module Game_state : sig
 
     val default : t
 
+    val is_over : t -> bool
     val to_string : t -> string
 end
