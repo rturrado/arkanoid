@@ -26,8 +26,6 @@ module Intro = struct
                                 Graphics.render_copy sdl_renderer texture dst >>= fun () ->
                                     Graphics.render_present sdl_renderer;
                                     Graphics.delay 3000l;
-                                    Graphics.destroy_texture texture;
-                                    Graphics.free_surface sdl_surface;
                                     Ok ()
                     )
             )
