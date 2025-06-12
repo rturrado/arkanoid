@@ -6,6 +6,8 @@ open Arkanoid.Graphics
 open Arkanoid.Image
 open Arkanoid.Intro
 open Arkanoid.Log
+open Arkanoid.Mixer
+open Arkanoid.Music
 open Arkanoid.Text
 
 let (>>=) = Result.bind
@@ -42,25 +44,29 @@ let main ()
 : (unit, string) result =
     Log.init();
     Graphics.init () >>= fun () ->
-        Image.init () >>=  fun () ->
-            Text.init () >>= fun () ->
-                let width = int_of_float Canvas.window_width in
-                let height = int_of_float Canvas.window_height in
-                let title = "Arkanoid" in
-                Graphics.create_window width height title >>= fun sdl_window ->
-                    Graphics.create_renderer sdl_window >>= fun sdl_renderer ->
-                        let graphics : Graphics.t = sdl_renderer in
-                        let context : Context.t = Context.default in
-                        Intro.paint graphics >>= fun () ->
-                            match loop graphics context with
-                            | Error err -> Error err
-                            | Ok () ->
-                                Graphics.destroy_renderer sdl_renderer;
-                                Graphics.destroy_window sdl_window;
-                                Text.quit ();
-                                Image.quit ();
-                                Graphics.quit ();
-                                Ok ()
+        Mixer.init () >>= fun () ->
+            Music.play Music.one_0 >>= fun mixer_music ->
+                Image.init () >>=  fun () ->
+                    Text.init () >>= fun () ->
+                        let width = int_of_float Canvas.window_width in
+                        let height = int_of_float Canvas.window_height in
+                        let title = "Arkanoid" in
+                        Graphics.create_window width height title >>= fun sdl_window ->
+                            Graphics.create_renderer sdl_window >>= fun sdl_renderer ->
+                                let graphics : Graphics.t = sdl_renderer in
+                                let context : Context.t = Context.default in
+                                Intro.paint graphics >>= fun () ->
+                                    match loop graphics context with
+                                    | Error err -> Error err
+                                    | Ok () ->
+                                        Graphics.destroy_renderer sdl_renderer;
+                                        Graphics.destroy_window sdl_window;
+                                        Text.quit ();
+                                        Image.quit ();
+                                        Music.halt mixer_music >>= fun () ->
+                                            Mixer.quit ();
+                                            Graphics.quit ();
+                                            Ok ()
 
 let () =
     if !Sys.interactive then ()

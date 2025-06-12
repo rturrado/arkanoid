@@ -18,6 +18,8 @@
         Log
         Maths
         Message_box
+        Mixer
+        Music
         Paddle
         Physics
         Player_state
@@ -25,5 +27,5 @@
         Text
         Time
         Wall)
-    (libraries base tsdl tsdl-image tsdl-ttf)
+    (libraries base tsdl tsdl-image tsdl-mixer tsdl-ttf)
 )

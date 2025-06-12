@@ -7,7 +7,7 @@ Learning some OCaml by implementing this beautiful arcade game.
 ## Dependencies
 
 - `dune` compiler.
-- `base`, `tsdl`, `tsdl-image`, and `tsdl-ttf` opam libraries.
+- `base`, `tsdl`, `tsdl-image`, `tsdl-mixer` and `tsdl-ttf` opam libraries.
 
 ## Build
 

@@ -24,6 +24,6 @@ module Image = struct
     let load (path : string)
     : (Sdl.surface, string) result =
         match Image.load path with
-        | Error (`Msg err) -> Error ("Sdl.load err: " ^ err)
+        | Error (`Msg err) -> Error ("Image.load err: " ^ err)
         | Ok surface -> Ok surface
 end

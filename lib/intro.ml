@@ -10,7 +10,7 @@ module Intro = struct
     let intro_640_480 : Image.t = {
         path = Filename.concat "./res" "intro.jpg";
         width = 640.0;
-        height = 480.0;
+        height = 480.0
     }
 
     let paint (sdl_renderer : Sdl.renderer)
