@@ -19,7 +19,7 @@ module Graphics = struct
     let init ()
     : (unit, string) result =
         match Sdl.init Sdl.Init.(video + events) with
-        | Error (`Msg err) -> Error ("Sdl.Init error: " ^ err)
+        | Error (`Msg err) -> Error ("Sdl.init error: " ^ err)
         | Ok () -> Ok ()
 
     let quit ()
@@ -99,7 +99,7 @@ module Graphics = struct
     : (unit, string) result =
         set_render_draw_color sdl_renderer Color.black >>= fun () ->
             match Sdl.render_clear sdl_renderer with
-            | Error (`Msg  err) -> Error err
+            | Error (`Msg  err) -> Error ("Sdl.render_clear error: " ^ err)
             | Ok () -> Ok ()
 
     let render_copy (sdl_renderer : Sdl.renderer) (texture : texture_t) (dst : Rectangle.t)
@@ -114,14 +114,14 @@ module Graphics = struct
     : (unit, string) result =
         let sdl_rectangle = create_rectangle rectangle in
         match Sdl.render_draw_rect sdl_renderer (Some sdl_rectangle) with
-        | Error (`Msg err) -> Error ("Sdl.set_render_draw_color error: " ^ err)
+        | Error (`Msg err) -> Error ("Sdl.render_draw_rect error: " ^ err)
         | Ok () -> Ok ()
 
     let render_fill_rect (sdl_renderer : Sdl.renderer) (rectangle : Rectangle.t)
     : (unit, string) result =
         let sdl_rectangle = create_rectangle rectangle in
         match Sdl.render_fill_rect sdl_renderer (Some sdl_rectangle) with
-        | Error (`Msg err) -> Error ("Sdl.set_render_fill_color error: " ^ err)
+        | Error (`Msg err) -> Error ("Sdl.render_fill_rect error: " ^ err)
         | Ok () -> Ok ()
 
     let render_present (sdl_renderer : Sdl.renderer)
