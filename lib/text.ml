@@ -77,7 +77,11 @@ module Text = struct
         match textures with
         | [] -> Ok ()
         | first_texture :: rest_textures ->
-            let first_dst = { dst with height = first_texture.height } in
+            let first_dst = { dst with
+                x = dst.x +. ((dst.width -. first_texture.width) /. 2.0);
+                width = first_texture.width;
+                height = first_texture.height
+            } in
             match render_texture sdl_renderer first_texture first_dst with
             | Error err -> Error err
             | Ok () ->
