@@ -15,11 +15,9 @@ let (>>=) = Result.bind
 let process_event (context : Context.t) (event : Events.event)
 : (Context.t, string) result =
     match context.Context.game_state with
-    | Ready
-    | ReportingKill
-    | Paused -> Context.process_event_at_pause context event
     | Over -> Context.process_event_at_over context event
     | Running -> Context.process_event_at_running context event
+    | _ -> Context.process_event_at_pause context event
 
 let rec loop (graphics : Graphics.t) (context : Context.t)
 : (unit, string) result =

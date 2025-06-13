@@ -1,9 +1,10 @@
 module Game_state : sig
     type t =
         | Ready (* Game has just started *)
-        | Paused (* Game is paused by the player *)
+        | Paused (* Game has been paused *)
         | Running (* Game is running *)
-        | ReportingKill (* Game is paused because the player was killed *)
+        | PlayerCompletedLevel (* Player completed a level *)
+        | PlayerKilled (* Player has been killed *)
         | Over (* Game is over *)
 
     val default : t

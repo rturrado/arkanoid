@@ -1,9 +1,10 @@
 module Game_state = struct
     type t =
         | Ready (* Game has just started *)
-        | Paused (* Game is paused by the player *)
-        | Running (* Game is playing *)
-        | ReportingKill (* Game is paused because the player was killed *)
+        | Paused (* Game has been paused *)
+        | Running (* Game is running *)
+        | PlayerCompletedLevel (* Player completed a level *)
+        | PlayerKilled (* Player has been killed *)
         | Over (* Game is over *)
 
     let default : t = Ready
@@ -18,6 +19,7 @@ module Game_state = struct
         | Ready -> "Ready"
         | Paused -> "Paused"
         | Running -> "Playing"
-        | ReportingKill -> "ReportingKill"
+        | PlayerCompletedLevel -> "PlayerCompletedLevel"
+        | PlayerKilled -> "PlayerKilled"
         | Over -> "Over"
 end

@@ -1,4 +1,5 @@
 open Ball
+open Brick
 open Collision
 open Events
 open Font
@@ -36,7 +37,10 @@ module Context = struct
             "Press any key to resume!"
         | Game_state.Running ->
             "Running"
-        | Game_state.ReportingKill ->
+        | Game_state.PlayerCompletedLevel ->
+            "Level completed!\n" ^
+            "Press any key to resume!"
+        | Game_state.PlayerKilled ->
             "They've killed you!\n" ^
             "Press any key to resume!"
         | Over ->
@@ -44,7 +48,18 @@ module Context = struct
 
     let move_paddle (context : t) (direction : Paddle.direction_t)
     : t =
-        { context with level_state = Level_state.move_paddle context.level_state direction }
+        let updated_level_state = Level_state.move_paddle context.level_state direction in
+        { context with level_state = updated_level_state }
+
+    let hit_brick (context : t) (brick_id : Brick.id)
+    : t =
+        let updated_level_state = Level_state.hit_brick context.level_state brick_id in
+        let updated_game_state = if Level_state.is_finished updated_level_state then
+            Game_state.PlayerCompletedLevel
+        else
+            context.game_state
+        in
+        { context with level_state = updated_level_state; game_state = updated_game_state }
 
     let is_level_finished (context : t)
     : bool =
@@ -81,8 +96,7 @@ module Context = struct
             else
                 context
         | `Brick brick ->
-            let updated_level_state = Level_state.hit_brick context.level_state brick.id in
-            { context with level_state = updated_level_state }
+            hit_brick context brick.id
         | _ -> context
 
     let rec apply_collisions (context : t) (new_ball : Ball.t) (collisions : Collision.t list) (time : float)
